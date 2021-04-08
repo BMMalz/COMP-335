@@ -1,0 +1,30 @@
+#!/bin/bash
+# - ./mymedian - Benjamin Malz
+# - Description: This script finds the median of a list of integers.
+# - Input: This script takes one argument, a filename for the input file. The input file must contain a list of integers, with only one on each line.
+# - Output: The script will output the median of all integers contained in the input file into the terminal, or an error message if the file is empty. 
+let AMOUNT=0
+
+for LINE in $(sort $1 -n)
+do
+	let AMOUNT=$AMOUNT+1
+	let nums[$AMOUNT]=$LINE
+done
+
+MODULUS=$(( $AMOUNT % 2))
+
+if [ $AMOUNT -eq 0 ]
+then
+	echo "mymedian: file" $1 "is empty"
+elif [ $MODULUS -eq 1 ]
+then
+	let HALFWAY=$(echo "$AMOUNT / 2 + .5" | bc -l | xargs printf "%.0f \n")
+	let MEDIAN=${nums[$HALFWAY]}
+	echo $MEDIAN
+elif [ $MODULUS -eq 0 ]
+then
+	let HALFWAY=$AMOUNT/2
+	let HALFPLUS=$HALFWAY+1
+	let PREMED=${nums[$HALFWAY]}+${nums[$HALFPLUS]}
+	echo "$PREMED / 2" | bc -l | xargs printf "%.1f \n"
+fi

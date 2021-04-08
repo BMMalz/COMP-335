@@ -1,0 +1,13 @@
+#!/bin/bash
+# - ./myfind - Benjamin Malz
+# - Description: This script searches for a user-input filename in the current directory.
+# - Input: The user must input a filename as the first argument.
+# - Output: If the specified filename is found in the current directory, then the terminal will display the name of the file. If not, the terminal will display a message informing the user the file does not exist.
+find $1 > /dev/null 2>&1
+
+if [ $? -eq 0 ]
+then
+	echo $1 
+else
+	echo "myfind: '"$1"': No such file"
+fi

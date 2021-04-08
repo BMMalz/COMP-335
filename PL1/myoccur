@@ -1,0 +1,12 @@
+#!/bin/bash
+# - ./myoccur - Benjamin Malz
+# - Description: This script counts the number of times a user-specified string appears in a file.
+# - Input: The script requires two arguments. The first argument is the string to search for in the file. The second argument is the file to search for occurrences of the string.
+# - Output: The script will display the number of times the string appeared in the terminal.
+
+if [[ $2 == "" ]]
+then
+	echo "myoccur: no file specified"
+else
+	grep -i -o $1 $2 | wc -l
+fi

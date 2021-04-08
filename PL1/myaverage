@@ -1,0 +1,20 @@
+#!/bin/bash
+# - ./myaverage - Benjamin Malz
+# - Description: This script calculates the average of all integers contained in a file.
+# - Input: The script takes one argument, which is the input file. The input file must contain a list of integers, with one integer on each line.
+# - Output: The script will output the average of the integers contained in the input file, rounded to two decimal places to the terminal. If the file is empty, an error message will be output into the terminal instead.
+let TOTAL=0
+let AMOUNT=0
+
+while IFS= read -r NUM
+do 
+	let TOTAL=$TOTAL+$NUM
+	let AMOUNT=$AMOUNT+1
+done < "$1"
+
+if [ $AMOUNT -eq 0 ]
+then
+	echo "No contents in file"
+else
+	echo "$TOTAL / $AMOUNT" | bc -l | xargs printf "%.2f \n"
+fi

@@ -1,0 +1,21 @@
+#!/bin/bash
+# - ./myconvert - Benjamin Malz
+# - Description: This script reads a DEM file in ESRI ASCII format and converts each grid coordinate in the file into an integer, rounded to the nearest whole number, and outputs the integers to a user-specified file, with one integer per line.
+# - Input: The script requires two arguments, the first of which is a valid DEM file in ESRI ASCII grid format. The second argument is the filename for the output. Ensure the output argument is not an important file, otherwise it will be overwritten by the program.
+# - Output: The script outputs a file containing every grid coordinate from the input file, each rounded to the nearest integer, and each on its own line. If less than two arguments were given to the script, it will display a message in the terminal informing the user of missing arguments.
+if [[ $2 == "" ]]
+then
+	echo "myconvert: missing argument"
+else
+	> $2
+	for LINE in $(tail -n +6 $1)
+	do 
+		for NUMBER in $LINE
+		do
+			if [[ $NUMBER == *"."* ]]
+			then
+				echo "$NUMBER" | xargs printf "%.0f \n" >> $2
+			fi
+		done
+	done < "$1"
+fi
